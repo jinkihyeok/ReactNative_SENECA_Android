@@ -16,7 +16,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 import Slider from "@react-native-community/slider";
 import DateVersion from "../components/DateVersion";
-import { captureRef } from "react-native-view-shot";
+import ViewShot from "react-native-view-shot";
 
 function CameraScreen() {
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
@@ -62,7 +62,7 @@ function CameraScreen() {
 
   async function saveImage() {
     try {
-      const result = await captureRef(snapShotRef);
+      const result = await snapShotRef.current.capture();
       const asset = await MediaLibrary.createAssetAsync(result);
       const album = await MediaLibrary.getAlbumAsync("Seneca");
       if (album === null) {
@@ -329,7 +329,11 @@ function CameraScreen() {
           </Camera>
         </View>
       ) : (
-        <View style={{ flex: 1 }} ref={snapShotRef}>
+        <ViewShot
+          style={{ flex: 1 }}
+          ref={snapShotRef}
+          options={{ quality: 1 }}
+        >
           <ImageBackground
             source={{ uri: image }}
             style={[styles.camera, textLocationStyle()]}
@@ -403,7 +407,7 @@ function CameraScreen() {
               </View>
             </View>
           </ImageBackground>
-        </View>
+        </ViewShot>
       )}
       <View style={styles.versionContainer}>
         <TouchableOpacity
@@ -543,7 +547,7 @@ const styles = StyleSheet.create({
   locationBtn: {
     width: "30%",
     height: "100%",
-    // opacity: 0,
+    opacity: 0,
   },
   versionContainer: {
     flexDirection: "row",

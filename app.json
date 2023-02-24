@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "SENECA_android",
+    "name": "SENECA",
     "slug": "SENECA_android",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -39,7 +39,8 @@
         {
           "photosPermission": "This app needs access to your photo library to upload pictures.",
           "savePhotosPermission": "This app needs access to your photo library to save pictures.",
-          "isAccessMediaLocationEnabled": true
+          "isAccessMediaLocationEnabled": true,
+          "requestLegacyExternalStorage": true
         }
       ],
       [
