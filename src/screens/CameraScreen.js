@@ -10,6 +10,7 @@ import {
   ImageBackground,
   Alert,
   Pressable,
+  useWindowDimensions,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
@@ -26,7 +27,8 @@ function CameraScreen() {
   const [cameraType, setCameraType] = useState(CameraType.back);
   const cameraRef = useRef(null);
   const [textLocation, setTextLocation] = useState("2");
-  const [sliderValue, setSliderValue] = useState(25);
+  const { fontScale } = useWindowDimensions();
+  const [sliderValue, setSliderValue] = useState(25 / fontScale);
   const [fontColor, setFontColor] = useState("white");
   const [version, setVersion] = useState("ver1");
   const [pickedDateTime, setPickedDateTime] = useState(null);
@@ -160,7 +162,7 @@ function CameraScreen() {
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <Text
           style={{
-            fontSize: 20,
+            fontSize: 20 / fontScale,
             color: "white",
             fontWeight: "bold",
             textAlign: "center",
@@ -178,7 +180,7 @@ function CameraScreen() {
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <Text
           style={{
-            fontSize: 20,
+            fontSize: 20 / fontScale,
             color: "white",
             fontWeight: "bold",
             textAlign: "center",
@@ -212,7 +214,7 @@ function CameraScreen() {
             <Text
               style={{
                 color: "white",
-                fontSize: 18,
+                fontSize: 18 / fontScale,
                 paddingBottom: 10,
               }}
             >
@@ -234,15 +236,21 @@ function CameraScreen() {
               <Text
                 style={{
                   color: "white",
-                  fontSize: 40,
-                  lineHeight: 44,
+                  fontSize: 40 / fontScale,
+                  lineHeight: 44 / fontScale,
                 }}
               >
                 ●
               </Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => setFontColor("black")}>
-              <Text style={{ color: "black", fontSize: 40, lineHeight: 44 }}>
+              <Text
+                style={{
+                  color: "black",
+                  fontSize: 40 / fontScale,
+                  lineHeight: 44 / fontScale,
+                }}
+              >
                 ●
               </Text>
             </TouchableOpacity>
@@ -253,7 +261,7 @@ function CameraScreen() {
             <Text
               style={{
                 color: "white",
-                fontSize: 18,
+                fontSize: 18 / fontScale,
                 paddingBottom: 10,
               }}
             >
@@ -263,8 +271,8 @@ function CameraScreen() {
           <View style={styles.sliderContainer}>
             <Slider
               style={styles.slider}
-              minimumValue={14}
-              maximumValue={36}
+              minimumValue={14 / fontScale}
+              maximumValue={36 / fontScale}
               minimumTrackTintColor="#FFFFFF"
               maximumTrackTintColor="grey"
               value={sliderValue}
@@ -445,7 +453,10 @@ function CameraScreen() {
           onPress={() => setVersion("ver1")}
         >
           <Text
-            style={[styles.topText, version === "ver1" && { color: "red" }]}
+            style={[
+              { color: "grey", fontSize: 18 / fontScale },
+              version === "ver1" && { color: "red" },
+            ]}
           >
             #1
           </Text>
@@ -455,7 +466,10 @@ function CameraScreen() {
           onPress={() => setVersion("ver2")}
         >
           <Text
-            style={[styles.topText, version === "ver2" && { color: "red" }]}
+            style={[
+              { color: "grey", fontSize: 18 / fontScale },
+              version === "ver2" && { color: "red" },
+            ]}
           >
             #2
           </Text>
@@ -465,7 +479,10 @@ function CameraScreen() {
           onPress={() => setVersion("ver3")}
         >
           <Text
-            style={[styles.topText, version === "ver3" && { color: "red" }]}
+            style={[
+              { color: "grey", fontSize: 18 / fontScale },
+              version === "ver3" && { color: "red" },
+            ]}
           >
             #3
           </Text>
@@ -475,7 +492,10 @@ function CameraScreen() {
           onPress={() => setVersion("ver4")}
         >
           <Text
-            style={[styles.topText, version === "ver4" && { color: "red" }]}
+            style={[
+              { color: "grey", fontSize: 18 / fontScale },
+              version === "ver4" && { color: "red" },
+            ]}
           >
             #4
           </Text>
@@ -485,7 +505,10 @@ function CameraScreen() {
           onPress={() => setVersion("ver5")}
         >
           <Text
-            style={[styles.topText, version === "ver5" && { color: "red" }]}
+            style={[
+              { color: "grey", fontSize: 18 / fontScale },
+              version === "ver5" && { color: "red" },
+            ]}
           >
             #5
           </Text>
@@ -494,10 +517,14 @@ function CameraScreen() {
       {!image ? (
         <View style={styles.buttonContainer}>
           <TouchableOpacity onPress={pickImage} style={styles.takePictureBtn}>
-            <Ionicons name="ios-albums-outline" size={30} color="grey" />
+            <Ionicons
+              name="ios-albums-outline"
+              size={30 / fontScale}
+              color="grey"
+            />
           </TouchableOpacity>
           <TouchableOpacity onPress={takePicture} style={styles.takePictureBtn}>
-            <MaterialIcons name="camera" size={60} color="white" />
+            <MaterialIcons name="camera" size={60 / fontScale} color="white" />
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
@@ -508,19 +535,27 @@ function CameraScreen() {
               );
             }}
           >
-            <EvilIcons name="refresh" size={40} color="grey" />
+            <EvilIcons name="refresh" size={40 / fontScale} color="grey" />
           </TouchableOpacity>
         </View>
       ) : (
         <View style={styles.buttonContainer2}>
           <TouchableOpacity onPress={reTake} style={styles.reTakeBtn}>
-            <Ionicons name="return-down-back-outline" size={35} color="white" />
+            <Ionicons
+              name="return-down-back-outline"
+              size={35 / fontScale}
+              color="white"
+            />
           </TouchableOpacity>
           <View style={styles.takePictureBtn}>
-            <MaterialIcons name="camera" size={60} color="black" />
+            <MaterialIcons name="camera" size={60 / fontScale} color="black" />
           </View>
           <TouchableOpacity onPress={saveImage} style={styles.saveBtn}>
-            <MaterialIcons name="save-alt" size={35} color="white" />
+            <MaterialIcons
+              name="save-alt"
+              size={35 / fontScale}
+              color="white"
+            />
           </TouchableOpacity>
         </View>
       )}
@@ -618,9 +653,5 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "white",
     paddingVertical: 30,
-  },
-  topText: {
-    color: "grey",
-    fontSize: 18,
   },
 });

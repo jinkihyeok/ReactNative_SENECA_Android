@@ -33,7 +33,11 @@ export default function App() {
 
   return (
     <SafeAreaView style={styles.container} onLayout={onLayoutRootView}>
-      <StatusBar animated={true} barStyle="light-content" />
+      <StatusBar
+        animated={true}
+        barStyle="light-content"
+        backgroundColor="black"
+      />
       <CameraScreen />
     </SafeAreaView>
   );

@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet, useWindowDimensions } from "react-native";
 
 function DateVersion({ version, sliderValue, pickedDateTime, fontColor }) {
   const newdate = new Date();
@@ -276,6 +276,8 @@ function DateVersion({ version, sliderValue, pickedDateTime, fontColor }) {
     }
   }
 
+  const { fontScale } = useWindowDimensions();
+
   if (version === "ver1") {
     return (
       <View
@@ -289,20 +291,32 @@ function DateVersion({ version, sliderValue, pickedDateTime, fontColor }) {
           <Text
             style={{
               color: fontColor,
-              fontSize: sliderValue,
+              fontSize: sliderValue / fontScale,
               fontWeight: "bold",
             }}
           >
             {getDayLong()}
           </Text>
         </View>
-        <View style={{ paddingVertical: 0 }}>
-          <Text style={{ color: fontColor, fontSize: sliderValue * 0.6 }}>
+        <View>
+          <Text
+            style={{
+              color: fontColor,
+              fontSize: (sliderValue * 0.6) / fontScale,
+              textAlign: "center",
+            }}
+          >
             {getYear()}-{getMonth()}-{getDate()}
           </Text>
         </View>
         <View>
-          <Text style={{ color: fontColor, fontSize: sliderValue * 0.6 }}>
+          <Text
+            style={{
+              color: fontColor,
+              fontSize: (sliderValue * 0.6) / fontScale,
+              textAlign: "center",
+            }}
+          >
             {getTimes()}
           </Text>
         </View>
@@ -323,15 +337,22 @@ function DateVersion({ version, sliderValue, pickedDateTime, fontColor }) {
           <Text
             style={{
               color: fontColor,
-              fontSize: sliderValue,
+              fontSize: sliderValue / fontScale,
               fontWeight: "bold",
+              textAlign: "center",
             }}
           >
             {getTimes()}
           </Text>
         </View>
         <View>
-          <Text style={{ color: fontColor, fontSize: sliderValue * 0.7 }}>
+          <Text
+            style={{
+              color: fontColor,
+              fontSize: (sliderValue * 0.7) / fontScale,
+              textAlign: "center",
+            }}
+          >
             {getYear()}-{getMonth()}-{getDate()}&nbsp;{getDayShort()}
           </Text>
         </View>
@@ -352,15 +373,22 @@ function DateVersion({ version, sliderValue, pickedDateTime, fontColor }) {
           <Text
             style={{
               color: fontColor,
-              fontSize: sliderValue,
+              fontSize: sliderValue / fontScale,
               fontWeight: "bold",
+              textAlign: "center",
             }}
           >
             {getYear()}年 {getMonthSliceZero()}月 {getDateSliceZero()}日
           </Text>
         </View>
         <View>
-          <Text style={{ color: fontColor, fontSize: sliderValue * 0.7 }}>
+          <Text
+            style={{
+              color: fontColor,
+              fontSize: (sliderValue * 0.7) / fontScale,
+              textAlign: "center",
+            }}
+          >
             {getTimes()}
           </Text>
         </View>
@@ -381,8 +409,9 @@ function DateVersion({ version, sliderValue, pickedDateTime, fontColor }) {
           <Text
             style={{
               color: fontColor,
-              fontSize: sliderValue,
+              fontSize: sliderValue / fontScale,
               fontWeight: "bold",
+              textAlign: "center",
             }}
           >
             {getDayShort()} {getMonthEng()} {getDate()}&nbsp;&nbsp;{getTimes()}
@@ -405,8 +434,9 @@ function DateVersion({ version, sliderValue, pickedDateTime, fontColor }) {
           <Text
             style={{
               color: fontColor,
-              fontSize: sliderValue,
+              fontSize: sliderValue / fontScale,
               fontWeight: "bold",
+              textAlign: "center",
             }}
           >
             {getYear()}년 {getMonthSliceZero()}월 {getDateSliceZero()}일&nbsp;
