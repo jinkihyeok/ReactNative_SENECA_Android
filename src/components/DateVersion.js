@@ -1,4 +1,8 @@
-import { View, Text, StyleSheet, useWindowDimensions } from "react-native";
+import { View, Text, useWindowDimensions } from "react-native";
+
+Text.defaultProps = Text.defaultProps || {};
+Text.defaultProps.maxFontSizeMultiplier = 1;
+Text.defaultProps.allowFontScaling = false;
 
 function DateVersion({ version, sliderValue, pickedDateTime, fontColor }) {
   const newdate = new Date();
@@ -291,7 +295,7 @@ function DateVersion({ version, sliderValue, pickedDateTime, fontColor }) {
           <Text
             style={{
               color: fontColor,
-              fontSize: sliderValue / fontScale,
+              fontSize: sliderValue,
               fontWeight: "bold",
             }}
           >
@@ -302,7 +306,7 @@ function DateVersion({ version, sliderValue, pickedDateTime, fontColor }) {
           <Text
             style={{
               color: fontColor,
-              fontSize: (sliderValue * 0.6) / fontScale,
+              fontSize: sliderValue * 0.6,
               textAlign: "center",
             }}
           >
@@ -313,7 +317,7 @@ function DateVersion({ version, sliderValue, pickedDateTime, fontColor }) {
           <Text
             style={{
               color: fontColor,
-              fontSize: (sliderValue * 0.6) / fontScale,
+              fontSize: sliderValue * 0.6,
               textAlign: "center",
             }}
           >
@@ -337,7 +341,7 @@ function DateVersion({ version, sliderValue, pickedDateTime, fontColor }) {
           <Text
             style={{
               color: fontColor,
-              fontSize: sliderValue / fontScale,
+              fontSize: sliderValue,
               fontWeight: "bold",
               textAlign: "center",
             }}
@@ -349,7 +353,7 @@ function DateVersion({ version, sliderValue, pickedDateTime, fontColor }) {
           <Text
             style={{
               color: fontColor,
-              fontSize: (sliderValue * 0.7) / fontScale,
+              fontSize: sliderValue * 0.7,
               textAlign: "center",
             }}
           >
@@ -373,7 +377,7 @@ function DateVersion({ version, sliderValue, pickedDateTime, fontColor }) {
           <Text
             style={{
               color: fontColor,
-              fontSize: sliderValue / fontScale,
+              fontSize: sliderValue,
               fontWeight: "bold",
               textAlign: "center",
             }}
@@ -385,7 +389,7 @@ function DateVersion({ version, sliderValue, pickedDateTime, fontColor }) {
           <Text
             style={{
               color: fontColor,
-              fontSize: (sliderValue * 0.7) / fontScale,
+              fontSize: sliderValue * 0.7,
               textAlign: "center",
             }}
           >
@@ -409,7 +413,7 @@ function DateVersion({ version, sliderValue, pickedDateTime, fontColor }) {
           <Text
             style={{
               color: fontColor,
-              fontSize: sliderValue / fontScale,
+              fontSize: sliderValue,
               fontWeight: "bold",
               textAlign: "center",
             }}
@@ -434,7 +438,7 @@ function DateVersion({ version, sliderValue, pickedDateTime, fontColor }) {
           <Text
             style={{
               color: fontColor,
-              fontSize: sliderValue / fontScale,
+              fontSize: sliderValue,
               fontWeight: "bold",
               textAlign: "center",
             }}
