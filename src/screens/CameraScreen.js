@@ -17,12 +17,14 @@ import { EvilIcons } from "@expo/vector-icons";
 import Slider from "@react-native-community/slider";
 import DateVersion from "../components/DateVersion";
 import ViewShot from "react-native-view-shot";
+import { useIsFocused } from "@react-navigation/native";
 
 Text.defaultProps = Text.defaultProps || {};
 Text.defaultProps.maxFontSizeMultiplier = 1;
 Text.defaultProps.allowFontScaling = false;
 
 function CameraScreen() {
+  const isFocused = useIsFocused();
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
   const [hasMediaLibraryPermission, setHasMediaLibraryPermission] =
     useState(null);
@@ -36,10 +38,12 @@ function CameraScreen() {
   const [pickedDateTime, setPickedDateTime] = useState(null);
   const snapShotRef = useRef();
   const [isCameraReady, setIsCameraReady] = useState(false);
+  const [isDateVisible, setIsDateVisible] = useState(false);
 
   function onCameraReady() {
+    setIsCameraReady(true);
     setTimeout(() => {
-      setIsCameraReady(true);
+      setIsDateVisible(true);
     }, 500);
   }
 
@@ -81,33 +85,32 @@ function CameraScreen() {
       } else {
         await MediaLibrary.addAssetsToAlbumAsync([asset], album, false);
       }
+    } catch (e) {
+      console.log(e);
+    } finally {
       Alert.alert(
         "저장",
-        "사진이 저장되었습니다.",
+        "저장되었습니다.",
         [
           {
             text: "확인",
-            onPress: () => {
-              reTake();
-            },
-            style: "cancel",
+            onPress: () => reTake(),
+            styles: "cancel",
           },
         ],
-        {
-          cancelable: false,
-        }
+        { cancelable: false }
       );
-    } catch (e) {
-      console.log(e);
     }
   }
 
   function reTake() {
+    setIsCameraReady(false);
+    setIsDateVisible(false);
     setImage(null);
     setPickedDateTime(null);
-    setIsCameraReady(false);
+    setIsCameraReady(true);
     setTimeout(() => {
-      setIsCameraReady(true);
+      setIsDateVisible(true);
     }, 500);
   }
 
@@ -286,87 +289,92 @@ function CameraScreen() {
       </View>
       {!image ? (
         <View style={{ flex: 1 }}>
-          <Camera
-            style={styles.camera}
-            type={cameraType}
-            ref={cameraRef}
-            onCameraReady={onCameraReady}
-          >
-            {isCameraReady && (
-              <View style={[styles.camera, textLocationStyle()]}>
-                <View>
-                  <DateVersion
-                    version={version}
-                    sliderValue={sliderValue}
-                    pickedDateTime={pickedDateTime}
-                    fontColor={fontColor}
-                  />
+          {isCameraReady && (
+            <Camera
+              style={styles.camera}
+              type={cameraType}
+              ref={cameraRef}
+              onCameraReady={onCameraReady}
+              onMountError={(error) => {
+                console.log("onMountError", error);
+              }}
+            >
+              {isDateVisible && (
+                <View style={[styles.camera, textLocationStyle()]}>
+                  <View>
+                    <DateVersion
+                      version={version}
+                      sliderValue={sliderValue}
+                      pickedDateTime={pickedDateTime}
+                      fontColor={fontColor}
+                    />
+                  </View>
+                  <View style={styles.locationBtnContainer2}>
+                    <View style={styles.topLocationBtn}>
+                      <Pressable
+                        style={styles.locationBtn}
+                        onPress={() => setTextLocation("1")}
+                      >
+                        <Text>Touch</Text>
+                      </Pressable>
+                      <Pressable
+                        style={styles.locationBtn}
+                        onPress={() => setTextLocation("2")}
+                      >
+                        <Text>Touch</Text>
+                      </Pressable>
+                      <Pressable
+                        style={styles.locationBtn}
+                        onPress={() => setTextLocation("3")}
+                      >
+                        <Text>Touch</Text>
+                      </Pressable>
+                    </View>
+                    <View style={styles.midLocationBtn}>
+                      <Pressable
+                        style={styles.locationBtn}
+                        onPress={() => setTextLocation("4")}
+                      >
+                        <Text>Touch</Text>
+                      </Pressable>
+                      <Pressable
+                        style={styles.locationBtn}
+                        onPress={() => setTextLocation("5")}
+                      >
+                        <Text>Touch</Text>
+                      </Pressable>
+                      <Pressable
+                        style={styles.locationBtn}
+                        onPress={() => setTextLocation("6")}
+                      >
+                        <Text>Touch</Text>
+                      </Pressable>
+                    </View>
+                    <View style={styles.botLocationBtn}>
+                      <Pressable
+                        style={styles.locationBtn}
+                        onPress={() => setTextLocation("7")}
+                      >
+                        <Text>Touch</Text>
+                      </Pressable>
+                      <Pressable
+                        style={styles.locationBtn}
+                        onPress={() => setTextLocation("8")}
+                      >
+                        <Text>Touch</Text>
+                      </Pressable>
+                      <Pressable
+                        style={styles.locationBtn}
+                        onPress={() => setTextLocation("9")}
+                      >
+                        <Text>Touch</Text>
+                      </Pressable>
+                    </View>
+                  </View>
                 </View>
-                <View style={styles.locationBtnContainer2}>
-                  <View style={styles.topLocationBtn}>
-                    <Pressable
-                      style={styles.locationBtn}
-                      onPress={() => setTextLocation("1")}
-                    >
-                      <Text>Touch</Text>
-                    </Pressable>
-                    <Pressable
-                      style={styles.locationBtn}
-                      onPress={() => setTextLocation("2")}
-                    >
-                      <Text>Touch</Text>
-                    </Pressable>
-                    <Pressable
-                      style={styles.locationBtn}
-                      onPress={() => setTextLocation("3")}
-                    >
-                      <Text>Touch</Text>
-                    </Pressable>
-                  </View>
-                  <View style={styles.midLocationBtn}>
-                    <Pressable
-                      style={styles.locationBtn}
-                      onPress={() => setTextLocation("4")}
-                    >
-                      <Text>Touch</Text>
-                    </Pressable>
-                    <Pressable
-                      style={styles.locationBtn}
-                      onPress={() => setTextLocation("5")}
-                    >
-                      <Text>Touch</Text>
-                    </Pressable>
-                    <Pressable
-                      style={styles.locationBtn}
-                      onPress={() => setTextLocation("6")}
-                    >
-                      <Text>Touch</Text>
-                    </Pressable>
-                  </View>
-                  <View style={styles.botLocationBtn}>
-                    <Pressable
-                      style={styles.locationBtn}
-                      onPress={() => setTextLocation("7")}
-                    >
-                      <Text>Touch</Text>
-                    </Pressable>
-                    <Pressable
-                      style={styles.locationBtn}
-                      onPress={() => setTextLocation("8")}
-                    >
-                      <Text>Touch</Text>
-                    </Pressable>
-                    <Pressable
-                      style={styles.locationBtn}
-                      onPress={() => setTextLocation("9")}
-                    >
-                      <Text>Touch</Text>
-                    </Pressable>
-                  </View>
-                </View>
-              </View>
-            )}
-          </Camera>
+              )}
+            </Camera>
+          )}
         </View>
       ) : (
         <ViewShot

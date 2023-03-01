@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@react-native-community/slider": "4.2.4",
+    "@react-navigation/native": "^6.1.6",
     "expo": "~47.0.12",
     "expo-camera": "~13.1.0",
     "expo-image-picker": "~14.0.2",
