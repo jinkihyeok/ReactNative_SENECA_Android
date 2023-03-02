@@ -2,7 +2,6 @@ import { StyleSheet, SafeAreaView, StatusBar } from "react-native";
 import CameraScreen from "./src/screens/CameraScreen";
 import * as SplashScreen from "expo-splash-screen";
 import { useCallback, useEffect, useState } from "react";
-import { NavigationContainer } from "@react-navigation/native";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -39,9 +38,7 @@ export default function App() {
         barStyle="light-content"
         backgroundColor="black"
       />
-      <NavigationContainer>
-        <CameraScreen />
-      </NavigationContainer>
+      <CameraScreen />
     </SafeAreaView>
   );
 }

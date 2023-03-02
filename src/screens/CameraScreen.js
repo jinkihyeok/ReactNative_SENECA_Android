@@ -1,7 +1,7 @@
 import { Camera, CameraType } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
 import * as ImagePicker from "expo-image-picker";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import {
   View,
   Text,
@@ -17,14 +17,12 @@ import { EvilIcons } from "@expo/vector-icons";
 import Slider from "@react-native-community/slider";
 import DateVersion from "../components/DateVersion";
 import ViewShot from "react-native-view-shot";
-import { useIsFocused } from "@react-navigation/native";
 
 Text.defaultProps = Text.defaultProps || {};
 Text.defaultProps.maxFontSizeMultiplier = 1;
 Text.defaultProps.allowFontScaling = false;
 
 function CameraScreen() {
-  const isFocused = useIsFocused();
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
   const [hasMediaLibraryPermission, setHasMediaLibraryPermission] =
     useState(null);
@@ -32,7 +30,7 @@ function CameraScreen() {
   const [cameraType, setCameraType] = useState(CameraType.back);
   const cameraRef = useRef(null);
   const [textLocation, setTextLocation] = useState("2");
-  const [sliderValue, setSliderValue] = useState(25);
+  const [sliderValue, setSliderValue] = useState(24);
   const [fontColor, setFontColor] = useState("white");
   const [version, setVersion] = useState("ver1");
   const [pickedDateTime, setPickedDateTime] = useState(null);
@@ -40,12 +38,12 @@ function CameraScreen() {
   const [isCameraReady, setIsCameraReady] = useState(false);
   const [isDateVisible, setIsDateVisible] = useState(false);
 
-  function onCameraReady() {
+  useLayoutEffect(() => {
     setIsCameraReady(true);
     setTimeout(() => {
       setIsDateVisible(true);
     }, 500);
-  }
+  }, []);
 
   useEffect(() => {
     (async () => {
@@ -277,7 +275,7 @@ function CameraScreen() {
             <Slider
               style={styles.slider}
               minimumValue={14}
-              maximumValue={36}
+              maximumValue={34}
               minimumTrackTintColor="#FFFFFF"
               maximumTrackTintColor="grey"
               value={sliderValue}
@@ -290,15 +288,7 @@ function CameraScreen() {
       {!image ? (
         <View style={{ flex: 1 }}>
           {isCameraReady && (
-            <Camera
-              style={styles.camera}
-              type={cameraType}
-              ref={cameraRef}
-              onCameraReady={onCameraReady}
-              onMountError={(error) => {
-                console.log("onMountError", error);
-              }}
-            >
+            <Camera style={styles.camera} type={cameraType} ref={cameraRef}>
               {isDateVisible && (
                 <View style={[styles.camera, textLocationStyle()]}>
                   <View>
