@@ -185,6 +185,60 @@ function DateVersion({ version, sliderValue, pickedDateTime, fontColor }) {
     }
   }
 
+  function getTimesKo() {
+    if (pickedDateTime === null) {
+      const hours = newdate.getHours();
+      const minutes = newdate.getMinutes();
+      const getHours = () => {
+        if (0 < hours < 10) {
+          return `${hours}`;
+        } else if (hours <= 12) {
+          return `${hours}`;
+        } else if (hours > 12) {
+          return `${hours - 12}`;
+        }
+      };
+      const getMinutes = () => {
+        if (minutes < 10) {
+          return `0${minutes}`;
+        } else {
+          return minutes;
+        }
+      };
+      const getAmPm = () => {
+        if (hours < 12) {
+          return "오전";
+        } else {
+          return "오후";
+        }
+      };
+      return `${getAmPm()} ${getHours()}:${getMinutes()}`;
+    } else {
+      const pickedHours = pickedDateTime.slice(11, 13);
+      const pickedMinutes = pickedDateTime.slice(14, 16);
+      const getHours = () => {
+        if (pickedHours < 10) {
+          return `${pickedHours.slice(1)}`;
+        } else if (pickedHours <= 12) {
+          return `${pickedHours}`;
+        } else if (pickedHours > 12) {
+          return `${pickedHours - 12}`;
+        }
+      };
+      const getMinutes = () => {
+        return pickedMinutes;
+      };
+      const getAmPm = () => {
+        if (pickedHours < 12) {
+          return "오전";
+        } else {
+          return "오후";
+        }
+      };
+      return `${getAmPm()} ${getHours()}:${getMinutes()}`;
+    }
+  }
+
   function getDayShort() {
     if (pickedDateTime === null) {
       const day = newdate.getDay();
@@ -440,11 +494,21 @@ function DateVersion({ version, sliderValue, pickedDateTime, fontColor }) {
               color: fontColor,
               fontSize: sliderValue,
               fontWeight: "bold",
-              textAlign: "center",
             }}
           >
             {getYear()}년 {getMonthSliceZero()}월 {getDateSliceZero()}일&nbsp;
             {getDayKo()}
+          </Text>
+        </View>
+        <View>
+          <Text
+            style={{
+              color: fontColor,
+              fontSize: sliderValue * 0.7,
+              textAlign: "center",
+            }}
+          >
+            {getTimesKo()}
           </Text>
         </View>
       </View>
