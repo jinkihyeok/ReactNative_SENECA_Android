@@ -1,9 +1,16 @@
-import { StyleSheet, SafeAreaView, StatusBar } from "react-native";
-import CameraScreen from "./src/screens/CameraScreen";
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet, Text } from "react-native";
+import { CameraScreen } from "./src/screen/camera-screen";
+import { SafeAreaView } from "react-native-safe-area-context";
 import * as SplashScreen from "expo-splash-screen";
 import { useCallback, useEffect, useState } from "react";
 
 SplashScreen.preventAutoHideAsync();
+
+// @ts-ignore
+Text.defaultProps = Text.defaultProps || {};
+// @ts-ignore
+Text.defaultProps.allowFontScaling = false;
 
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
@@ -30,14 +37,9 @@ export default function App() {
   if (!appIsReady) {
     return null;
   }
-
   return (
     <SafeAreaView style={styles.container} onLayout={onLayoutRootView}>
-      <StatusBar
-        animated={true}
-        barStyle="light-content"
-        backgroundColor="black"
-      />
+      <StatusBar style="dark" />
       <CameraScreen />
     </SafeAreaView>
   );

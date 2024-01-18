@@ -12,3 +12,9 @@ web-build/
 
 # macOS
 .DS_Store
+.babel.config.js
+.eas.json
+.package.json
+.package-lock.json
+.tsconfig.json
+.app.json

@@ -2,7 +2,7 @@
   "expo": {
     "name": "SENECA",
     "slug": "SENECA_android",
-    "version": "1.0.4",
+    "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "dark",
@@ -23,7 +23,7 @@
       }
     },
     "android": {
-      "versionCode": 5,
+      "versionCode": 6,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#000000"
@@ -32,19 +32,23 @@
         "android.permission.CAMERA",
         "android.permission.READ_EXTERNAL_STORAGE",
         "android.permission.WRITE_EXTERNAL_STORAGE",
-        "android.permission.ACCESS_MEDIA_LOCATION",
-        "android.permission.RECORD_AUDIO"
+        "android.permission.ACCESS_MEDIA_LOCATION"
       ],
       "package": "com.jinkihyeok.SENECA_android"
     },
     "plugins": [
       [
+        "expo-camera",
+        {
+          "cameraPermission": "This app needs access to your camera to take pictures."
+        }
+      ],
+      [
         "expo-media-library",
         {
           "photosPermission": "This app needs access to your photo library to upload pictures.",
           "savePhotosPermission": "This app needs access to your photo library to save pictures.",
-          "isAccessMediaLocationEnabled": true,
-          "requestLegacyExternalStorage": true
+          "isAccessMediaLocationEnabled": true
         }
       ],
       [

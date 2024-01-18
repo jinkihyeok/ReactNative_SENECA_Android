@@ -1,10 +1,18 @@
-import { View, Text, useWindowDimensions } from "react-native";
+import { View, Text } from "react-native";
 
-Text.defaultProps = Text.defaultProps || {};
-Text.defaultProps.maxFontSizeMultiplier = 1;
-Text.defaultProps.allowFontScaling = false;
+interface DateVersionProps {
+  version: string;
+  sliderValue: number;
+  pickedDateTime: string | null;
+  fontColor: string;
+}
 
-function DateVersion({ version, sliderValue, pickedDateTime, fontColor }) {
+const DateVersion: React.FC<DateVersionProps> = ({
+  version,
+  sliderValue,
+  pickedDateTime,
+  fontColor,
+}) => {
   const newdate = new Date();
 
   function getYear() {
@@ -136,7 +144,7 @@ function DateVersion({ version, sliderValue, pickedDateTime, fontColor }) {
       const hours = newdate.getHours();
       const minutes = newdate.getMinutes();
       const getHours = () => {
-        if (0 < hours < 10) {
+        if (0 < hours && hours < 10) {
           return `${hours}`;
         } else if (hours <= 12) {
           return `${hours}`;
@@ -160,11 +168,11 @@ function DateVersion({ version, sliderValue, pickedDateTime, fontColor }) {
       };
       return `${getHours()}:${getMinutes()} ${getAmPm()}`;
     } else {
-      const pickedHours = pickedDateTime.slice(11, 13);
+      const pickedHours = parseInt(pickedDateTime.slice(11, 13), 10);
       const pickedMinutes = pickedDateTime.slice(14, 16);
       const getHours = () => {
         if (pickedHours < 10) {
-          return `${pickedHours.slice(1)}`;
+          return `${pickedHours % 10}`;
         } else if (pickedHours <= 12) {
           return `${pickedHours}`;
         } else if (pickedHours > 12) {
@@ -190,7 +198,7 @@ function DateVersion({ version, sliderValue, pickedDateTime, fontColor }) {
       const hours = newdate.getHours();
       const minutes = newdate.getMinutes();
       const getHours = () => {
-        if (0 < hours < 10) {
+        if (0 < hours && hours < 10) {
           return `${hours}`;
         } else if (hours <= 12) {
           return `${hours}`;
@@ -214,11 +222,11 @@ function DateVersion({ version, sliderValue, pickedDateTime, fontColor }) {
       };
       return `${getAmPm()} ${getHours()}:${getMinutes()}`;
     } else {
-      const pickedHours = pickedDateTime.slice(11, 13);
+      const pickedHours = parseInt(pickedDateTime.slice(11, 13), 10);
       const pickedMinutes = pickedDateTime.slice(14, 16);
       const getHours = () => {
         if (pickedHours < 10) {
-          return `${pickedHours.slice(1)}`;
+          return `${pickedHours % 10}`;
         } else if (pickedHours <= 12) {
           return `${pickedHours}`;
         } else if (pickedHours > 12) {
@@ -334,8 +342,6 @@ function DateVersion({ version, sliderValue, pickedDateTime, fontColor }) {
     }
   }
 
-  const { fontScale } = useWindowDimensions();
-
   if (version === "ver1") {
     return (
       <View
@@ -356,25 +362,13 @@ function DateVersion({ version, sliderValue, pickedDateTime, fontColor }) {
             {getDayLong()}
           </Text>
         </View>
-        <View>
-          <Text
-            style={{
-              color: fontColor,
-              fontSize: sliderValue * 0.6,
-              textAlign: "center",
-            }}
-          >
+        <View style={{ paddingVertical: 0 }}>
+          <Text style={{ color: fontColor, fontSize: sliderValue * 0.6 }}>
             {getYear()}-{getMonth()}-{getDate()}
           </Text>
         </View>
         <View>
-          <Text
-            style={{
-              color: fontColor,
-              fontSize: sliderValue * 0.6,
-              textAlign: "center",
-            }}
-          >
+          <Text style={{ color: fontColor, fontSize: sliderValue * 0.6 }}>
             {getTimes()}
           </Text>
         </View>
@@ -397,20 +391,13 @@ function DateVersion({ version, sliderValue, pickedDateTime, fontColor }) {
               color: fontColor,
               fontSize: sliderValue,
               fontWeight: "bold",
-              textAlign: "center",
             }}
           >
             {getTimes()}
           </Text>
         </View>
         <View>
-          <Text
-            style={{
-              color: fontColor,
-              fontSize: sliderValue * 0.7,
-              textAlign: "center",
-            }}
-          >
+          <Text style={{ color: fontColor, fontSize: sliderValue * 0.7 }}>
             {getYear()}-{getMonth()}-{getDate()}&nbsp;{getDayShort()}
           </Text>
         </View>
@@ -433,20 +420,13 @@ function DateVersion({ version, sliderValue, pickedDateTime, fontColor }) {
               color: fontColor,
               fontSize: sliderValue,
               fontWeight: "bold",
-              textAlign: "center",
             }}
           >
             {getYear()}年 {getMonthSliceZero()}月 {getDateSliceZero()}日
           </Text>
         </View>
         <View>
-          <Text
-            style={{
-              color: fontColor,
-              fontSize: sliderValue * 0.7,
-              textAlign: "center",
-            }}
-          >
+          <Text style={{ color: fontColor, fontSize: sliderValue * 0.7 }}>
             {getTimes()}
           </Text>
         </View>
@@ -469,7 +449,6 @@ function DateVersion({ version, sliderValue, pickedDateTime, fontColor }) {
               color: fontColor,
               fontSize: sliderValue,
               fontWeight: "bold",
-              textAlign: "center",
             }}
           >
             {getDayShort()} {getMonthEng()} {getDate()}&nbsp;&nbsp;{getTimes()}
@@ -514,6 +493,6 @@ function DateVersion({ version, sliderValue, pickedDateTime, fontColor }) {
       </View>
     );
   }
-}
+};
 
 export default DateVersion;
